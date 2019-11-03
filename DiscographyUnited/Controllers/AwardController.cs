@@ -11,14 +11,14 @@ namespace DiscographyUnited.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RecordController : ControllerBase
+    public class AwardController : ControllerBase
     {
-        private readonly ILogger<RecordController> _logger;
-        private readonly RecordService _recordService;
+        private readonly ILogger<AwardController> _logger;
+        private readonly AwardService _awardService;
 
-        public RecordController(ILogger<RecordController> logger, DiscographyUnitedContext context)
+        public AwardController(ILogger<AwardController> logger, DiscographyUnitedContext context)
         {
-            _recordService = new RecordService(context);
+            _awardService = new AwardService(context);
             _logger = logger;
         }
 
@@ -28,11 +28,11 @@ namespace DiscographyUnited.Controllers
         [ProducesResponseType(500)]
         public IActionResult Get()
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(Get)} was called.");
+            _logger.LogInformation($"{nameof(AwardController)} : {nameof(Get)} was called.");
             try
             {
-                var records = _recordService.FindAll();
-                return Ok(records);
+                var awards = _awardService.FindAll();
+                return Ok(awards);
             }
             catch (DbException exception)
             {
@@ -50,13 +50,13 @@ namespace DiscographyUnited.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult GetRecord(long id)
+        public IActionResult GetAward(long id)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(GetRecord)} was called.");
+            _logger.LogInformation($"{nameof(AwardController)} : {nameof(GetAward)} was called.");
             try
             {
-                var records = _recordService.FindById(id);
-                return Ok(records);
+                var awards = _awardService.FindById(id);
+                return Ok(awards);
             }
             catch (DbException exception)
             {
@@ -70,29 +70,29 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpPost(Name = "Record")]
+        [HttpPost(Name = "Award")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
         [ProducesResponseType(500)]
-        public IActionResult PostRecord([FromBody] RecordModel recordModel)
+        public IActionResult PostAward([FromBody] AwardModel awardModel)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(PostRecord)} was called.");
+            _logger.LogInformation($"{nameof(AwardController)} : {nameof(PostAward)} was called.");
             try
             {
-                if (recordModel == null)
+                if (awardModel == null)
                 {
-                    return BadRequest("Record is required");
+                    return BadRequest("Award is required");
                 }
 
-                if (_recordService.FindById(recordModel.Id) != null)
+                if (_awardService.FindById(awardModel.Id) != null)
                 {
-                    return Conflict("Record already exists");
+                    return Conflict("Award already exists");
                 }
 
-                _recordService.Create(recordModel);
-                _recordService.Save();
-                return Ok("Record Created");
+                _awardService.Create(awardModel);
+                _awardService.Save();
+                return Ok("Award Created");
             }
             catch (DbException exception)
             {
@@ -106,21 +106,21 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpPut(Name = "Record")]
+        [HttpPut(Name = "Award")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public IActionResult UpdateRecord([FromBody] RecordModel recordModel)
+        public IActionResult UpdateAward([FromBody] AwardModel awardModel)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(UpdateRecord)} was called.");
+            _logger.LogInformation($"{nameof(AwardController)} : {nameof(UpdateAward)} was called.");
             try
             {
-                if (recordModel == null)
+                if (awardModel == null)
                 {
-                    return BadRequest("Record is required");
+                    return BadRequest("Award is required");
                 }
-                _recordService.Update(recordModel);
-                _recordService.Save();
+                _awardService.Update(awardModel);
+                _awardService.Save();
                 return Ok();
             }
             catch (DbException exception)
@@ -135,22 +135,22 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpDelete(Name = "Record/{id}")]
+        [HttpDelete(Name = "Award/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(410)]
         [ProducesResponseType(500)]
-        public IActionResult DeleteRecord(long id)
+        public IActionResult DeleteAward(long id)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(DeleteRecord)} was called.");
+            _logger.LogInformation($"{nameof(AwardController)} : {nameof(DeleteAward)} was called.");
             try
             {
-                var record = _recordService.FindById(id);
-                if (record == null)
+                var award = _awardService.FindById(id);
+                if (award == null)
                 {
                     return StatusCode((int)HttpStatusCode.Gone);
                 }
-                _recordService.Delete(record);
-                _recordService.Save();
+                _awardService.Delete(award);
+                _awardService.Save();
                 return Ok();
             }
             catch (DbException exception)

@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DiscographyUnited.Repositories
 {
-    public class RecordRepository : IBaseRepository<RecordEntity>, IDisposable
+    public class GenreRepository : IBaseRepository<GenreEntity>, IDisposable
     {
         private readonly DiscographyUnitedContext _context;
 
-        public RecordRepository(DiscographyUnitedContext discographyUnitedContext)
+        public GenreRepository(DiscographyUnitedContext discographyUnitedContext)
         {
             _context = discographyUnitedContext;
         }
@@ -33,32 +33,31 @@ namespace DiscographyUnited.Repositories
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<RecordEntity> FindAll()
+        public IEnumerable<GenreEntity> FindAll()
         {
-            return _context.Record.ToList();
+            return _context.Genre.ToList();
         }
 
-        public RecordEntity FindById(long id)
+        public GenreEntity FindById(long id)
         {
-            return _context.Record.Find(id);
+            return _context.Genre.Find(id);
         }
 
-        public void Create(RecordEntity record)
+        public void Create(GenreEntity genre)
         {
-            _context.Record.Add(record);
+            _context.Genre.Add(genre);
         }
 
-        public void Update(RecordEntity record)
+        public void Update(GenreEntity genre)
         {
-            _context.Entry(record).State = EntityState.Modified;
-            _context.Record.Update(record);
+            _context.Entry(genre).State = EntityState.Modified;
+            _context.Genre.Update(genre);
         }
 
-        public void Delete(RecordEntity record)
+        public void Delete(GenreEntity genre)
         {
-            _context.Record.Remove(record);
+            _context.Genre.Remove(genre);
         }
-
 
         public void Save()
         {

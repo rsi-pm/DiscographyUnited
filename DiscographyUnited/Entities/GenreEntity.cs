@@ -6,8 +6,7 @@ namespace DiscographyUnited.Entities
 {
     public class GenreEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
         public long Id { get; set; }
         [Required]
         public string Name { get; set; }

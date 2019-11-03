@@ -11,14 +11,14 @@ namespace DiscographyUnited.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RecordController : ControllerBase
+    public class PersonController : ControllerBase
     {
-        private readonly ILogger<RecordController> _logger;
-        private readonly RecordService _recordService;
+        private readonly ILogger<PersonController> _logger;
+        private readonly PersonService _personService;
 
-        public RecordController(ILogger<RecordController> logger, DiscographyUnitedContext context)
+        public PersonController(ILogger<PersonController> logger, DiscographyUnitedContext context)
         {
-            _recordService = new RecordService(context);
+            _personService = new PersonService(context);
             _logger = logger;
         }
 
@@ -28,11 +28,11 @@ namespace DiscographyUnited.Controllers
         [ProducesResponseType(500)]
         public IActionResult Get()
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(Get)} was called.");
+            _logger.LogInformation($"{nameof(PersonController)} : {nameof(Get)} was called.");
             try
             {
-                var records = _recordService.FindAll();
-                return Ok(records);
+                var persons = _personService.FindAll();
+                return Ok(persons);
             }
             catch (DbException exception)
             {
@@ -50,13 +50,13 @@ namespace DiscographyUnited.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult GetRecord(long id)
+        public IActionResult GetPerson(long id)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(GetRecord)} was called.");
+            _logger.LogInformation($"{nameof(PersonController)} : {nameof(GetPerson)} was called.");
             try
             {
-                var records = _recordService.FindById(id);
-                return Ok(records);
+                var persons = _personService.FindById(id);
+                return Ok(persons);
             }
             catch (DbException exception)
             {
@@ -70,29 +70,29 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpPost(Name = "Record")]
+        [HttpPost(Name = "Person")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
         [ProducesResponseType(500)]
-        public IActionResult PostRecord([FromBody] RecordModel recordModel)
+        public IActionResult PostPerson([FromBody] PersonModel personModel)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(PostRecord)} was called.");
+            _logger.LogInformation($"{nameof(PersonController)} : {nameof(PostPerson)} was called.");
             try
             {
-                if (recordModel == null)
+                if (personModel == null)
                 {
-                    return BadRequest("Record is required");
+                    return BadRequest("Person is required");
                 }
 
-                if (_recordService.FindById(recordModel.Id) != null)
+                if (_personService.FindById(personModel.Id) != null)
                 {
-                    return Conflict("Record already exists");
+                    return Conflict("Person already exists");
                 }
 
-                _recordService.Create(recordModel);
-                _recordService.Save();
-                return Ok("Record Created");
+                _personService.Create(personModel);
+                _personService.Save();
+                return Ok("Person Created");
             }
             catch (DbException exception)
             {
@@ -106,21 +106,21 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpPut(Name = "Record")]
+        [HttpPut(Name = "Person")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public IActionResult UpdateRecord([FromBody] RecordModel recordModel)
+        public IActionResult UpdatePerson([FromBody] PersonModel personModel)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(UpdateRecord)} was called.");
+            _logger.LogInformation($"{nameof(PersonController)} : {nameof(UpdatePerson)} was called.");
             try
             {
-                if (recordModel == null)
+                if (personModel == null)
                 {
-                    return BadRequest("Record is required");
+                    return BadRequest("Person is required");
                 }
-                _recordService.Update(recordModel);
-                _recordService.Save();
+                _personService.Update(personModel);
+                _personService.Save();
                 return Ok();
             }
             catch (DbException exception)
@@ -135,22 +135,22 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpDelete(Name = "Record/{id}")]
+        [HttpDelete(Name = "Person/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(410)]
         [ProducesResponseType(500)]
-        public IActionResult DeleteRecord(long id)
+        public IActionResult DeletePerson(long id)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(DeleteRecord)} was called.");
+            _logger.LogInformation($"{nameof(PersonController)} : {nameof(DeletePerson)} was called.");
             try
             {
-                var record = _recordService.FindById(id);
-                if (record == null)
+                var person = _personService.FindById(id);
+                if (person == null)
                 {
                     return StatusCode((int)HttpStatusCode.Gone);
                 }
-                _recordService.Delete(record);
-                _recordService.Save();
+                _personService.Delete(person);
+                _personService.Save();
                 return Ok();
             }
             catch (DbException exception)

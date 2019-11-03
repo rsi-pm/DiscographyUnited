@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DiscographyUnited.Repositories
 {
-    public class RecordRepository : IBaseRepository<RecordEntity>, IDisposable
+    public class AwardRepository : IBaseRepository<AwardEntity>, IDisposable
     {
         private readonly DiscographyUnitedContext _context;
 
-        public RecordRepository(DiscographyUnitedContext discographyUnitedContext)
+        public AwardRepository(DiscographyUnitedContext discographyUnitedContext)
         {
             _context = discographyUnitedContext;
         }
@@ -33,32 +33,31 @@ namespace DiscographyUnited.Repositories
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<RecordEntity> FindAll()
+        public IEnumerable<AwardEntity> FindAll()
         {
-            return _context.Record.ToList();
+            return _context.Award.ToList();
         }
 
-        public RecordEntity FindById(long id)
+        public AwardEntity FindById(long id)
         {
-            return _context.Record.Find(id);
+            return _context.Award.Find(id);
         }
 
-        public void Create(RecordEntity record)
+        public void Create(AwardEntity award)
         {
-            _context.Record.Add(record);
+            _context.Award.Add(award);
         }
 
-        public void Update(RecordEntity record)
+        public void Update(AwardEntity award)
         {
-            _context.Entry(record).State = EntityState.Modified;
-            _context.Record.Update(record);
+            _context.Entry(award).State = EntityState.Modified;
+            _context.Award.Update(award);
         }
 
-        public void Delete(RecordEntity record)
+        public void Delete(AwardEntity award)
         {
-            _context.Record.Remove(record);
+            _context.Award.Remove(award);
         }
-
 
         public void Save()
         {

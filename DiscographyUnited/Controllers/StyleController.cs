@@ -11,14 +11,14 @@ namespace DiscographyUnited.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RecordController : ControllerBase
+    public class StyleController : ControllerBase
     {
-        private readonly ILogger<RecordController> _logger;
-        private readonly RecordService _recordService;
+        private readonly ILogger<StyleController> _logger;
+        private readonly StyleService _styleService;
 
-        public RecordController(ILogger<RecordController> logger, DiscographyUnitedContext context)
+        public StyleController(ILogger<StyleController> logger, DiscographyUnitedContext context)
         {
-            _recordService = new RecordService(context);
+            _styleService = new StyleService(context);
             _logger = logger;
         }
 
@@ -28,11 +28,11 @@ namespace DiscographyUnited.Controllers
         [ProducesResponseType(500)]
         public IActionResult Get()
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(Get)} was called.");
+            _logger.LogInformation($"{nameof(StyleController)} : {nameof(Get)} was called.");
             try
             {
-                var records = _recordService.FindAll();
-                return Ok(records);
+                var styles = _styleService.FindAll();
+                return Ok(styles);
             }
             catch (DbException exception)
             {
@@ -50,13 +50,13 @@ namespace DiscographyUnited.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult GetRecord(long id)
+        public IActionResult GetStyle(long id)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(GetRecord)} was called.");
+            _logger.LogInformation($"{nameof(StyleController)} : {nameof(GetStyle)} was called.");
             try
             {
-                var records = _recordService.FindById(id);
-                return Ok(records);
+                var styles = _styleService.FindById(id);
+                return Ok(styles);
             }
             catch (DbException exception)
             {
@@ -70,29 +70,29 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpPost(Name = "Record")]
+        [HttpPost(Name = "Style")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
         [ProducesResponseType(500)]
-        public IActionResult PostRecord([FromBody] RecordModel recordModel)
+        public IActionResult PostStyle([FromBody] StyleModel styleModel)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(PostRecord)} was called.");
+            _logger.LogInformation($"{nameof(StyleController)} : {nameof(PostStyle)} was called.");
             try
             {
-                if (recordModel == null)
+                if (styleModel == null)
                 {
-                    return BadRequest("Record is required");
+                    return BadRequest("Style is required");
                 }
 
-                if (_recordService.FindById(recordModel.Id) != null)
+                if (_styleService.FindById(styleModel.Id) != null)
                 {
-                    return Conflict("Record already exists");
+                    return Conflict("Style already exists");
                 }
 
-                _recordService.Create(recordModel);
-                _recordService.Save();
-                return Ok("Record Created");
+                _styleService.Create(styleModel);
+                _styleService.Save();
+                return Ok("Style Created");
             }
             catch (DbException exception)
             {
@@ -106,21 +106,21 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpPut(Name = "Record")]
+        [HttpPut(Name = "Style")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public IActionResult UpdateRecord([FromBody] RecordModel recordModel)
+        public IActionResult UpdateStyle([FromBody] StyleModel styleModel)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(UpdateRecord)} was called.");
+            _logger.LogInformation($"{nameof(StyleController)} : {nameof(UpdateStyle)} was called.");
             try
             {
-                if (recordModel == null)
+                if (styleModel == null)
                 {
-                    return BadRequest("Record is required");
+                    return BadRequest("Style is required");
                 }
-                _recordService.Update(recordModel);
-                _recordService.Save();
+                _styleService.Update(styleModel);
+                _styleService.Save();
                 return Ok();
             }
             catch (DbException exception)
@@ -135,22 +135,22 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpDelete(Name = "Record/{id}")]
+        [HttpDelete(Name = "Style/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(410)]
         [ProducesResponseType(500)]
-        public IActionResult DeleteRecord(long id)
+        public IActionResult DeleteStyle(long id)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(DeleteRecord)} was called.");
+            _logger.LogInformation($"{nameof(StyleController)} : {nameof(DeleteStyle)} was called.");
             try
             {
-                var record = _recordService.FindById(id);
-                if (record == null)
+                var style = _styleService.FindById(id);
+                if (style == null)
                 {
                     return StatusCode((int)HttpStatusCode.Gone);
                 }
-                _recordService.Delete(record);
-                _recordService.Save();
+                _styleService.Delete(style);
+                _styleService.Save();
                 return Ok();
             }
             catch (DbException exception)

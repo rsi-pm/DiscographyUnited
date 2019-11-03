@@ -8,8 +8,7 @@ namespace DiscographyUnited.Entities
 {
     public class PersonEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
         public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

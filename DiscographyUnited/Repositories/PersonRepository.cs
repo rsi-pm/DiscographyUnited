@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DiscographyUnited.Repositories
 {
-    public class RecordRepository : IBaseRepository<RecordEntity>, IDisposable
+    public class PersonRepository : IBaseRepository<PersonEntity>, IDisposable
     {
         private readonly DiscographyUnitedContext _context;
 
-        public RecordRepository(DiscographyUnitedContext discographyUnitedContext)
+        public PersonRepository(DiscographyUnitedContext discographyUnitedContext)
         {
             _context = discographyUnitedContext;
         }
@@ -33,32 +33,31 @@ namespace DiscographyUnited.Repositories
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<RecordEntity> FindAll()
+        public IEnumerable<PersonEntity> FindAll()
         {
-            return _context.Record.ToList();
+            return _context.Person.ToList();
         }
 
-        public RecordEntity FindById(long id)
+        public PersonEntity FindById(long id)
         {
-            return _context.Record.Find(id);
+            return _context.Person.Find(id);
         }
 
-        public void Create(RecordEntity record)
+        public void Create(PersonEntity person)
         {
-            _context.Record.Add(record);
+            _context.Person.Add(person);
         }
 
-        public void Update(RecordEntity record)
+        public void Update(PersonEntity person)
         {
-            _context.Entry(record).State = EntityState.Modified;
-            _context.Record.Update(record);
+            _context.Entry(person).State = EntityState.Modified;
+            _context.Person.Update(person);
         }
 
-        public void Delete(RecordEntity record)
+        public void Delete(PersonEntity person)
         {
-            _context.Record.Remove(record);
+            _context.Person.Remove(person);
         }
-
 
         public void Save()
         {

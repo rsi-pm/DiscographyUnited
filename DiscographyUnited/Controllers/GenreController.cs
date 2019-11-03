@@ -11,14 +11,14 @@ namespace DiscographyUnited.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RecordController : ControllerBase
+    public class GenreController : ControllerBase
     {
-        private readonly ILogger<RecordController> _logger;
-        private readonly RecordService _recordService;
+        private readonly ILogger<GenreController> _logger;
+        private readonly GenreService _genreService;
 
-        public RecordController(ILogger<RecordController> logger, DiscographyUnitedContext context)
+        public GenreController(ILogger<GenreController> logger, DiscographyUnitedContext context)
         {
-            _recordService = new RecordService(context);
+            _genreService = new GenreService(context);
             _logger = logger;
         }
 
@@ -28,11 +28,11 @@ namespace DiscographyUnited.Controllers
         [ProducesResponseType(500)]
         public IActionResult Get()
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(Get)} was called.");
+            _logger.LogInformation($"{nameof(GenreController)} : {nameof(Get)} was called.");
             try
             {
-                var records = _recordService.FindAll();
-                return Ok(records);
+                var genres = _genreService.FindAll();
+                return Ok(genres);
             }
             catch (DbException exception)
             {
@@ -50,13 +50,13 @@ namespace DiscographyUnited.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult GetRecord(long id)
+        public IActionResult GetGenre(long id)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(GetRecord)} was called.");
+            _logger.LogInformation($"{nameof(GenreController)} : {nameof(GetGenre)} was called.");
             try
             {
-                var records = _recordService.FindById(id);
-                return Ok(records);
+                var genres = _genreService.FindById(id);
+                return Ok(genres);
             }
             catch (DbException exception)
             {
@@ -70,29 +70,29 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpPost(Name = "Record")]
+        [HttpPost(Name = "Genre")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
         [ProducesResponseType(500)]
-        public IActionResult PostRecord([FromBody] RecordModel recordModel)
+        public IActionResult PostGenre([FromBody] GenreModel genreModel)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(PostRecord)} was called.");
+            _logger.LogInformation($"{nameof(GenreController)} : {nameof(PostGenre)} was called.");
             try
             {
-                if (recordModel == null)
+                if (genreModel == null)
                 {
-                    return BadRequest("Record is required");
+                    return BadRequest("Genre is required");
                 }
 
-                if (_recordService.FindById(recordModel.Id) != null)
+                if (_genreService.FindById(genreModel.Id) != null)
                 {
-                    return Conflict("Record already exists");
+                    return Conflict("Genre already exists");
                 }
 
-                _recordService.Create(recordModel);
-                _recordService.Save();
-                return Ok("Record Created");
+                _genreService.Create(genreModel);
+                _genreService.Save();
+                return Ok("Genre Created");
             }
             catch (DbException exception)
             {
@@ -106,21 +106,21 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpPut(Name = "Record")]
+        [HttpPut(Name = "Genre")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public IActionResult UpdateRecord([FromBody] RecordModel recordModel)
+        public IActionResult UpdateGenre([FromBody] GenreModel genreModel)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(UpdateRecord)} was called.");
+            _logger.LogInformation($"{nameof(GenreController)} : {nameof(UpdateGenre)} was called.");
             try
             {
-                if (recordModel == null)
+                if (genreModel == null)
                 {
-                    return BadRequest("Record is required");
+                    return BadRequest("Genre is required");
                 }
-                _recordService.Update(recordModel);
-                _recordService.Save();
+                _genreService.Update(genreModel);
+                _genreService.Save();
                 return Ok();
             }
             catch (DbException exception)
@@ -135,22 +135,22 @@ namespace DiscographyUnited.Controllers
             }
         }
 
-        [HttpDelete(Name = "Record/{id}")]
+        [HttpDelete(Name = "Genre/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(410)]
         [ProducesResponseType(500)]
-        public IActionResult DeleteRecord(long id)
+        public IActionResult DeleteGenre(long id)
         {
-            _logger.LogInformation($"{nameof(RecordController)} : {nameof(DeleteRecord)} was called.");
+            _logger.LogInformation($"{nameof(GenreController)} : {nameof(DeleteGenre)} was called.");
             try
             {
-                var record = _recordService.FindById(id);
-                if (record == null)
+                var genre = _genreService.FindById(id);
+                if (genre == null)
                 {
                     return StatusCode((int)HttpStatusCode.Gone);
                 }
-                _recordService.Delete(record);
-                _recordService.Save();
+                _genreService.Delete(genre);
+                _genreService.Save();
                 return Ok();
             }
             catch (DbException exception)
