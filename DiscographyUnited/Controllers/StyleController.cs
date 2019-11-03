@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Data.Common;
 using System.Net;
-using DiscographyUnited.Data;
+using DiscographyUnited.Interfaces;
 using DiscographyUnited.Models;
-using DiscographyUnited.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,11 +13,11 @@ namespace DiscographyUnited.Controllers
     public class StyleController : ControllerBase
     {
         private readonly ILogger<StyleController> _logger;
-        private readonly StyleService _styleService;
+        private readonly IStyleService _styleService;
 
-        public StyleController(ILogger<StyleController> logger, DiscographyUnitedContext context)
+        public StyleController(ILogger<StyleController> logger, IStyleService styleService)
         {
-            _styleService = new StyleService(context);
+            _styleService = styleService;
             _logger = logger;
         }
 

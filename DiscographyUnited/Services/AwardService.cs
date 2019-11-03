@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DiscographyUnited.Data;
 using DiscographyUnited.Interfaces;
 using DiscographyUnited.Mappers;
 using DiscographyUnited.Models;
-using DiscographyUnited.Repositories;
 
 namespace DiscographyUnited.Services
 {
-    public class AwardService : IBaseService<AwardModel>
+    public class AwardService : IAwardService
     {
-        private readonly AwardRepository _awardRepository;
+        private readonly IAwardRepository _awardRepository;
 
-        public AwardService(DiscographyUnitedContext discographyUnitedContext)
+        public AwardService(IAwardRepository awardRepository)
         {
-            _awardRepository = new AwardRepository(discographyUnitedContext);
+            _awardRepository = awardRepository;
         }
 
         public void Create(AwardModel entity)

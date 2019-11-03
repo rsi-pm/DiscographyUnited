@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DiscographyUnited.Repositories
 {
-    public class RecordRepository : IBaseRepository<RecordEntity>, IDisposable
+    public class RecordRepository : IRecordRepository, IDisposable
     {
         private readonly DiscographyUnitedContext _context;
 

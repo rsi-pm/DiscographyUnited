@@ -2,7 +2,7 @@
 
 namespace DiscographyUnited.Interfaces
 {
-    interface IBaseService<T>
+    public interface IBaseService<T>
     {
         IEnumerable<T> FindAll();
         T FindById(long id);

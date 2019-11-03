@@ -1,4 +1,7 @@
 using DiscographyUnited.Data;
+using DiscographyUnited.Interfaces;
+using DiscographyUnited.Repositories;
+using DiscographyUnited.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +35,18 @@ namespace DiscographyUnited
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Discography United", Version = "v1"});
             });
+
+            services.AddScoped<IAwardService, AwardService>();
+            services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IRecordService, RecordService>();
+            services.AddScoped<IStyleService, StyleService>();
+
+            services.AddScoped<IAwardRepository, AwardRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IRecordRepository, RecordRepository>();
+            services.AddScoped<IStyleRepository, StyleRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

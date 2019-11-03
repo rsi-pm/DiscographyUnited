@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DiscographyUnited.Data;
 using DiscographyUnited.Interfaces;
 using DiscographyUnited.Mappers;
 using DiscographyUnited.Models;
-using DiscographyUnited.Repositories;
 
 namespace DiscographyUnited.Services
 {
-    public class RecordService : IBaseService<RecordModel>
+    public class RecordService : IRecordService
     {
-        private readonly RecordRepository _recordRepository;
+        private readonly IRecordRepository _recordRepository;
 
-        public RecordService(DiscographyUnitedContext discographyUnitedContext)
+        public RecordService(IRecordRepository recordRepository)
         {
-            _recordRepository = new RecordRepository(discographyUnitedContext);
+            _recordRepository = recordRepository;
         }
 
         public void Create(RecordModel entity)

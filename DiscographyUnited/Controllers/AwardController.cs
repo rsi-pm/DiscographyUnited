@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Data.Common;
 using System.Net;
-using DiscographyUnited.Data;
+using DiscographyUnited.Interfaces;
 using DiscographyUnited.Models;
-using DiscographyUnited.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,11 +13,11 @@ namespace DiscographyUnited.Controllers
     public class AwardController : ControllerBase
     {
         private readonly ILogger<AwardController> _logger;
-        private readonly AwardService _awardService;
+        private readonly IAwardService _awardService;
 
-        public AwardController(ILogger<AwardController> logger, DiscographyUnitedContext context)
+        public AwardController(ILogger<AwardController> logger, IAwardService awardService)
         {
-            _awardService = new AwardService(context);
+            _awardService = awardService;
             _logger = logger;
         }
 

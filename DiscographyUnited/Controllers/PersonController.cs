@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Data.Common;
 using System.Net;
-using DiscographyUnited.Data;
+using DiscographyUnited.Interfaces;
 using DiscographyUnited.Models;
-using DiscographyUnited.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,11 +13,11 @@ namespace DiscographyUnited.Controllers
     public class PersonController : ControllerBase
     {
         private readonly ILogger<PersonController> _logger;
-        private readonly PersonService _personService;
+        private readonly IPersonService _personService;
 
-        public PersonController(ILogger<PersonController> logger, DiscographyUnitedContext context)
+        public PersonController(ILogger<PersonController> logger, IPersonService personService)
         {
-            _personService = new PersonService(context);
+            _personService = personService;
             _logger = logger;
         }
 

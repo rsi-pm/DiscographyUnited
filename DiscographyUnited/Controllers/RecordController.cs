@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Data.Common;
 using System.Net;
-using DiscographyUnited.Data;
+using DiscographyUnited.Interfaces;
 using DiscographyUnited.Models;
-using DiscographyUnited.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,11 +13,11 @@ namespace DiscographyUnited.Controllers
     public class RecordController : ControllerBase
     {
         private readonly ILogger<RecordController> _logger;
-        private readonly RecordService _recordService;
+        private readonly IRecordService _recordService;
 
-        public RecordController(ILogger<RecordController> logger, DiscographyUnitedContext context)
+        public RecordController(ILogger<RecordController> logger, IRecordService recordService)
         {
-            _recordService = new RecordService(context);
+            _recordService = recordService;
             _logger = logger;
         }
 

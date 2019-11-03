@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DiscographyUnited.Data;
 using DiscographyUnited.Interfaces;
 using DiscographyUnited.Mappers;
 using DiscographyUnited.Models;
-using DiscographyUnited.Repositories;
 
 namespace DiscographyUnited.Services
 {
-    public class StyleService : IBaseService<StyleModel>
+    public class StyleService : IStyleService
     {
-        private readonly StyleRepository _styleRepository;
+        private readonly IStyleRepository _styleRepository;
 
-        public StyleService(DiscographyUnitedContext discographyUnitedContext)
+        public StyleService(IStyleRepository styleRepository)
         {
-            _styleRepository = new StyleRepository(discographyUnitedContext);
+            _styleRepository = styleRepository;
         }
 
         public void Create(StyleModel entity)

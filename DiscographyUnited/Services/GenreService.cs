@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DiscographyUnited.Data;
 using DiscographyUnited.Interfaces;
 using DiscographyUnited.Mappers;
 using DiscographyUnited.Models;
-using DiscographyUnited.Repositories;
 
 namespace DiscographyUnited.Services
 {
-    public class GenreService : IBaseService<GenreModel>
+    public class GenreService : IGenreService
     {
-        private readonly GenreRepository _genreRepository;
+        private readonly IGenreRepository _genreRepository;
 
-        public GenreService(DiscographyUnitedContext discographyUnitedContext)
+        public GenreService(IGenreRepository genreRepository)
         {
-            _genreRepository = new GenreRepository(discographyUnitedContext);
+            _genreRepository = genreRepository;
         }
 
         public void Create(GenreModel entity)

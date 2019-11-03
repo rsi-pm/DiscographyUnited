@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DiscographyUnited.Data;
 using DiscographyUnited.Interfaces;
 using DiscographyUnited.Mappers;
 using DiscographyUnited.Models;
-using DiscographyUnited.Repositories;
 
 namespace DiscographyUnited.Services
 {
-    public class PersonService : IBaseService<PersonModel>
+    public class PersonService : IPersonService
     {
-        private readonly PersonRepository _personRepository;
+        private readonly IPersonRepository _personRepository;
 
-        public PersonService(DiscographyUnitedContext discographyUnitedContext)
+        public PersonService(IPersonRepository personRepository)
         {
-            _personRepository = new PersonRepository(discographyUnitedContext);
+            _personRepository = personRepository;
         }
 
         public void Create(PersonModel entity)

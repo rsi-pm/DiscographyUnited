@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Data.Common;
 using System.Net;
-using DiscographyUnited.Data;
+using DiscographyUnited.Interfaces;
 using DiscographyUnited.Models;
-using DiscographyUnited.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,11 +13,11 @@ namespace DiscographyUnited.Controllers
     public class GenreController : ControllerBase
     {
         private readonly ILogger<GenreController> _logger;
-        private readonly GenreService _genreService;
+        private readonly IGenreService _genreService;
 
-        public GenreController(ILogger<GenreController> logger, DiscographyUnitedContext context)
+        public GenreController(ILogger<GenreController> logger, IGenreService genreService)
         {
-            _genreService = new GenreService(context);
+            _genreService = genreService;
             _logger = logger;
         }
 
