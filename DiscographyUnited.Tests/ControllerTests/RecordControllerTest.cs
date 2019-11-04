@@ -56,7 +56,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void UpdateRecord_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var record = SampleData.SampleRecordData.ValidRecordRecord1();
+            var record = SampleData.SampleRecordData.ValidSampleRecord1();
 
             // Act
             var result = _controller.UpdateRecord(record);
@@ -89,7 +89,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void PostRecord_WhenCalledIncorrectly_ReturnsConflictResult()
         {
             // Arrange
-            var record = SampleData.SampleRecordData.ValidRecordRecord1();
+            var record = SampleData.SampleRecordData.ValidSampleRecord1();
 
             // Act
             var result = _controller.PostRecord(record);

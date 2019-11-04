@@ -5,7 +5,7 @@ namespace DiscographyUnited.Tests.SampleData
 {
     public static class SampleRecordData
     {
-        public static RecordModel ValidRecordRecord1()
+        public static RecordModel ValidSampleRecord1()
         {
             return new RecordModel
             {
