@@ -19,5 +19,6 @@ namespace DiscographyUnited.Entities
         public FamilyMemberType? FamilyMemberType { get; set; }
         public virtual ICollection<PersonEntity> FamilyMembers { get; set; }
         public virtual ICollection<RecordEntity> Records { get; set; }
+        public virtual ICollection<AwardEntity> Awards { get; set; }
     }
 }

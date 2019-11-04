@@ -44,7 +44,8 @@ namespace DiscographyUnited.Mappers
                 FamilyMembers = personModel.FamilyMembers?.Select(ToEntity).ToList(),
                 FirstName = personModel.FirstName,
                 IsArtist = personModel.IsArtist,
-                LastName = personModel.LastName
+                LastName = personModel.LastName,
+                Awards = personModel.Awards?.Select(AwardMapper.ToEntity).ToList()
             };
         }
     }

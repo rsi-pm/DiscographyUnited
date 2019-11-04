@@ -4,14 +4,16 @@ using DiscographyUnited.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DiscographyUnited.Migrations
 {
     [DbContext(typeof(DiscographyUnitedContext))]
-    partial class DiscographyUnitedContextModelSnapshot : ModelSnapshot
+    [Migration("20191104204634_add-artist-to-person-table")]
+    partial class addartisttopersontable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

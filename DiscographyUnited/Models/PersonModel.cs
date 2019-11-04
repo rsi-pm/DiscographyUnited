@@ -16,5 +16,6 @@ namespace DiscographyUnited.Models
         public FamilyMemberType? FamilyMemberType { get; set; }
         public virtual ICollection<PersonModel> FamilyMembers { get; set; }
         public virtual ICollection<RecordModel> Records { get; set; }
+        public virtual ICollection<AwardModel> Awards { get; set; }
     }
 }
