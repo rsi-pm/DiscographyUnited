@@ -54,8 +54,9 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(GenreController)} : {nameof(GetGenre)} was called.");
             try
             {
-                var genres = _genreService.FindById(id);
-                return Ok(genres);
+                var genre = _genreService.FindById(id);
+                if (genre == null) return NotFound("Genre was not found");
+                return Ok(genre);
             }
             catch (DbException exception)
             {
@@ -79,15 +80,9 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(GenreController)} : {nameof(PostGenre)} was called.");
             try
             {
-                if (genreModel == null)
-                {
-                    return BadRequest("Genre is required");
-                }
+                if (genreModel == null) return BadRequest("Genre is required");
 
-                if (_genreService.FindById(genreModel.Id) != null)
-                {
-                    return Conflict("Genre already exists");
-                }
+                if (_genreService.FindById(genreModel.Id) != null) return Conflict("Genre already exists");
 
                 _genreService.Create(genreModel);
                 _genreService.Save();
@@ -114,10 +109,7 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(GenreController)} : {nameof(UpdateGenre)} was called.");
             try
             {
-                if (genreModel == null)
-                {
-                    return BadRequest("Genre is required");
-                }
+                if (genreModel == null) return BadRequest("Genre is required");
                 _genreService.Update(genreModel);
                 _genreService.Save();
                 return Ok();
@@ -144,10 +136,7 @@ namespace DiscographyUnited.Controllers
             try
             {
                 var genre = _genreService.FindById(id);
-                if (genre == null)
-                {
-                    return StatusCode((int)HttpStatusCode.Gone);
-                }
+                if (genre == null) return StatusCode((int) HttpStatusCode.Gone);
                 _genreService.Delete(genre);
                 _genreService.Save();
                 return Ok();

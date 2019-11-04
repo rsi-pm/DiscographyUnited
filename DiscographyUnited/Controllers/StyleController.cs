@@ -30,8 +30,9 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(StyleController)} : {nameof(Get)} was called.");
             try
             {
-                var styles = _styleService.FindAll();
-                return Ok(styles);
+                var style = _styleService.FindAll();
+                if (style == null) return NotFound("Style was not found");
+                return Ok(style);
             }
             catch (DbException exception)
             {

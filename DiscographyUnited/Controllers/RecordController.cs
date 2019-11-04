@@ -30,8 +30,9 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(RecordController)} : {nameof(Get)} was called.");
             try
             {
-                var records = _recordService.FindAll();
-                return Ok(records);
+                var record = _recordService.FindAll();
+                if (record == null) return NotFound("Record was not found");
+                return Ok(record);
             }
             catch (DbException exception)
             {

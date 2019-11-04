@@ -54,8 +54,9 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(AwardController)} : {nameof(GetAward)} was called.");
             try
             {
-                var awards = _awardService.FindById(id);
-                return Ok(awards);
+                var award = _awardService.FindById(id);
+                if (award == null) return NotFound("Award was not found");
+                return Ok(award);
             }
             catch (DbException exception)
             {
@@ -79,19 +80,13 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(AwardController)} : {nameof(PostAward)} was called.");
             try
             {
-                if (awardModel == null)
-                {
-                    return BadRequest("Award is required");
-                }
+                if (awardModel == null) return BadRequest("Award is required");
 
-                if (_awardService.FindById(awardModel.Id) != null)
-                {
-                    return Conflict("Award already exists");
-                }
+                if (_awardService.FindById(awardModel.Id) != null) return Conflict("Award already exists");
 
                 _awardService.Create(awardModel);
                 _awardService.Save();
-                return Ok("Award Created");
+                return Ok(awardModel);
             }
             catch (DbException exception)
             {
@@ -114,10 +109,7 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(AwardController)} : {nameof(UpdateAward)} was called.");
             try
             {
-                if (awardModel == null)
-                {
-                    return BadRequest("Award is required");
-                }
+                if (awardModel == null) return BadRequest("Award is required");
                 _awardService.Update(awardModel);
                 _awardService.Save();
                 return Ok();
@@ -144,10 +136,7 @@ namespace DiscographyUnited.Controllers
             try
             {
                 var award = _awardService.FindById(id);
-                if (award == null)
-                {
-                    return StatusCode((int)HttpStatusCode.Gone);
-                }
+                if (award == null) return StatusCode((int) HttpStatusCode.Gone);
                 _awardService.Delete(award);
                 _awardService.Save();
                 return Ok();

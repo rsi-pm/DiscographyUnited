@@ -54,8 +54,9 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(PersonController)} : {nameof(GetPerson)} was called.");
             try
             {
-                var persons = _personService.FindById(id);
-                return Ok(persons);
+                var person = _personService.FindById(id);
+                if (person == null) return NotFound("Person was not found");
+                return Ok(person);
             }
             catch (DbException exception)
             {
