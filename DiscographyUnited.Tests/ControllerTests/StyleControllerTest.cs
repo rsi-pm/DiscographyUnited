@@ -8,15 +8,15 @@ using Xunit;
 
 namespace DiscographyUnited.Tests.ControllerTests
 {
-    public class AwardControllerTest
+    public class StyleControllerTest
     {
-        private readonly AwardController _controller;
+        private readonly StyleController _controller;
 
-        public AwardControllerTest()
+        public StyleControllerTest()
         {
-            IAwardService service = new AwardServiceFake();
-            ILogger<AwardController> logger = new Logger<AwardController>(new LoggerFactory());
-            _controller = new AwardController(logger, service); 
+            IStyleService service = new StyleServiceFake();
+            ILogger<StyleController> logger = new Logger<StyleController>(new LoggerFactory());
+            _controller = new StyleController(logger, service); 
         }
 
         [Fact]
@@ -30,92 +30,92 @@ namespace DiscographyUnited.Tests.ControllerTests
         }
 
         [Fact]
-        public void GetAwardById_WhenCalled_ReturnsOkResult()
+        public void GetStyleById_WhenCalled_ReturnsOkResult()
         {
             // Act
-            var result = _controller.GetAward(1);
+            var result = _controller.GetStyle(1);
 
             // Assert
             Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
-        public void PostAward_WhenCalled_ReturnsOkResult()
+        public void PostStyle_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var award = new AwardModel();
+            var style = new StyleModel();
 
             // Act
-            var result = _controller.PostAward(award);
+            var result = _controller.PostStyle(style);
 
             // Assert
             Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
-        public void UpdateAward_WhenCalled_ReturnsOkResult()
+        public void UpdateStyle_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var award = new AwardModel();
+            var style = new StyleModel();
 
             // Act
-            var result = _controller.UpdateAward(award);
+            var result = _controller.UpdateStyle(style);
 
             // Assert
             Assert.IsType<OkResult>(result);
         }
 
         [Fact]
-        public void DeleteAward_WhenCalled_ReturnsOkResult()
+        public void DeleteStyle_WhenCalled_ReturnsOkResult()
         {
             // Act
-            var result = _controller.DeleteAward(1);
+            var result = _controller.DeleteStyle(1);
 
             // Assert
             Assert.IsType<OkResult>(result);
         }
 
         [Fact]
-        public void GetAwardById_WhenCalledIncorrectly_ReturnsNotFoundResult()
+        public void GetStyleById_WhenCalledIncorrectly_ReturnsNotFoundResult()
         {
             // Act
-            var result = _controller.GetAward(-1);
+            var result = _controller.GetStyle(-1);
 
             // Assert
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]
-        public void PostAward_WhenCalledIncorrectly_ReturnsConflictResult()
+        public void PostStyle_WhenCalledIncorrectly_ReturnsConflictResult()
         {
             // Arrange
-            var award = new AwardModel{Id = 1};
+            var style = new StyleModel{Id = 1};
 
             // Act
-            var result = _controller.PostAward(award);
+            var result = _controller.PostStyle(style);
 
             // Assert
             Assert.IsType<ConflictObjectResult>(result);
         }
 
         [Fact]
-        public void UpdateAward_WhenCalledIncorrectly_ReturnsBadResult()
+        public void UpdateStyle_WhenCalledIncorrectly_ReturnsBadResult()
         {
             // Arrange
-            var award = new AwardModel{Id = -1};
+            var style = new StyleModel{Id = -1};
 
             // Act
-            var result = _controller.UpdateAward(award);
+            var result = _controller.UpdateStyle(style);
 
             // Assert
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]
-        public void DeleteAward_WhenCalledIncorrectly_ReturnsGoneResult()
+        public void DeleteStyle_WhenCalledIncorrectly_ReturnsGoneResult()
         {
             // Act
-            var result = _controller.DeleteAward(-1);
+            var result = _controller.DeleteStyle(-1);
 
             // Assert
             Assert.IsType<StatusCodeResult>(result);

@@ -15,7 +15,8 @@ namespace DiscographyUnited.Mappers
             {
                 Description = awardEntity.Description,
                 Id = awardEntity.Id,
-                Name = awardEntity.Name
+                Name = awardEntity.Name,
+                ReceivedDate = awardEntity.ReceivedDate
             };
         }
 
@@ -29,7 +30,8 @@ namespace DiscographyUnited.Mappers
             {
                 Description = awardModel.Description,
                 Id = awardModel.Id,
-                Name = awardModel.Name
+                Name = awardModel.Name,
+                ReceivedDate = awardModel.ReceivedDate
             };
         }
     }

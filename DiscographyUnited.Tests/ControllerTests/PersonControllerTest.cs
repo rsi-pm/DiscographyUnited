@@ -8,15 +8,15 @@ using Xunit;
 
 namespace DiscographyUnited.Tests.ControllerTests
 {
-    public class AwardControllerTest
+    public class PersonControllerTest
     {
-        private readonly AwardController _controller;
+        private readonly PersonController _controller;
 
-        public AwardControllerTest()
+        public PersonControllerTest()
         {
-            IAwardService service = new AwardServiceFake();
-            ILogger<AwardController> logger = new Logger<AwardController>(new LoggerFactory());
-            _controller = new AwardController(logger, service); 
+            IPersonService service = new PersonServiceFake();
+            ILogger<PersonController> logger = new Logger<PersonController>(new LoggerFactory());
+            _controller = new PersonController(logger, service); 
         }
 
         [Fact]
@@ -30,92 +30,92 @@ namespace DiscographyUnited.Tests.ControllerTests
         }
 
         [Fact]
-        public void GetAwardById_WhenCalled_ReturnsOkResult()
+        public void GetPersonById_WhenCalled_ReturnsOkResult()
         {
             // Act
-            var result = _controller.GetAward(1);
+            var result = _controller.GetPerson(1);
 
             // Assert
             Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
-        public void PostAward_WhenCalled_ReturnsOkResult()
+        public void PostPerson_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var award = new AwardModel();
+            var person = new PersonModel();
 
             // Act
-            var result = _controller.PostAward(award);
+            var result = _controller.PostPerson(person);
 
             // Assert
             Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
-        public void UpdateAward_WhenCalled_ReturnsOkResult()
+        public void UpdatePerson_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var award = new AwardModel();
+            var person = new PersonModel();
 
             // Act
-            var result = _controller.UpdateAward(award);
+            var result = _controller.UpdatePerson(person);
 
             // Assert
             Assert.IsType<OkResult>(result);
         }
 
         [Fact]
-        public void DeleteAward_WhenCalled_ReturnsOkResult()
+        public void DeletePerson_WhenCalled_ReturnsOkResult()
         {
             // Act
-            var result = _controller.DeleteAward(1);
+            var result = _controller.DeletePerson(1);
 
             // Assert
             Assert.IsType<OkResult>(result);
         }
 
         [Fact]
-        public void GetAwardById_WhenCalledIncorrectly_ReturnsNotFoundResult()
+        public void GetPersonById_WhenCalledIncorrectly_ReturnsNotFoundResult()
         {
             // Act
-            var result = _controller.GetAward(-1);
+            var result = _controller.GetPerson(-1);
 
             // Assert
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]
-        public void PostAward_WhenCalledIncorrectly_ReturnsConflictResult()
+        public void PostPerson_WhenCalledIncorrectly_ReturnsConflictResult()
         {
             // Arrange
-            var award = new AwardModel{Id = 1};
+            var person = new PersonModel{Id = 1};
 
             // Act
-            var result = _controller.PostAward(award);
+            var result = _controller.PostPerson(person);
 
             // Assert
             Assert.IsType<ConflictObjectResult>(result);
         }
 
         [Fact]
-        public void UpdateAward_WhenCalledIncorrectly_ReturnsBadResult()
+        public void UpdatePerson_WhenCalledIncorrectly_ReturnsBadResult()
         {
             // Arrange
-            var award = new AwardModel{Id = -1};
+            var person = new PersonModel{Id = -1};
 
             // Act
-            var result = _controller.UpdateAward(award);
+            var result = _controller.UpdatePerson(person);
 
             // Assert
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]
-        public void DeleteAward_WhenCalledIncorrectly_ReturnsGoneResult()
+        public void DeletePerson_WhenCalledIncorrectly_ReturnsGoneResult()
         {
             // Act
-            var result = _controller.DeleteAward(-1);
+            var result = _controller.DeletePerson(-1);
 
             // Assert
             Assert.IsType<StatusCodeResult>(result);

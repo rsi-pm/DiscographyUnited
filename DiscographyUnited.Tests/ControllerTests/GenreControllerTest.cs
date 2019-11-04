@@ -8,15 +8,15 @@ using Xunit;
 
 namespace DiscographyUnited.Tests.ControllerTests
 {
-    public class AwardControllerTest
+    public class GenreControllerTest
     {
-        private readonly AwardController _controller;
+        private readonly GenreController _controller;
 
-        public AwardControllerTest()
+        public GenreControllerTest()
         {
-            IAwardService service = new AwardServiceFake();
-            ILogger<AwardController> logger = new Logger<AwardController>(new LoggerFactory());
-            _controller = new AwardController(logger, service); 
+            IGenreService service = new GenreServiceFake();
+            ILogger<GenreController> logger = new Logger<GenreController>(new LoggerFactory());
+            _controller = new GenreController(logger, service); 
         }
 
         [Fact]
@@ -30,92 +30,92 @@ namespace DiscographyUnited.Tests.ControllerTests
         }
 
         [Fact]
-        public void GetAwardById_WhenCalled_ReturnsOkResult()
+        public void GetGenreById_WhenCalled_ReturnsOkResult()
         {
             // Act
-            var result = _controller.GetAward(1);
+            var result = _controller.GetGenre(1);
 
             // Assert
             Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
-        public void PostAward_WhenCalled_ReturnsOkResult()
+        public void PostGenre_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var award = new AwardModel();
+            var genre = new GenreModel();
 
             // Act
-            var result = _controller.PostAward(award);
+            var result = _controller.PostGenre(genre);
 
             // Assert
             Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
-        public void UpdateAward_WhenCalled_ReturnsOkResult()
+        public void UpdateGenre_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var award = new AwardModel();
+            var genre = new GenreModel();
 
             // Act
-            var result = _controller.UpdateAward(award);
+            var result = _controller.UpdateGenre(genre);
 
             // Assert
             Assert.IsType<OkResult>(result);
         }
 
         [Fact]
-        public void DeleteAward_WhenCalled_ReturnsOkResult()
+        public void DeleteGenre_WhenCalled_ReturnsOkResult()
         {
             // Act
-            var result = _controller.DeleteAward(1);
+            var result = _controller.DeleteGenre(1);
 
             // Assert
             Assert.IsType<OkResult>(result);
         }
 
         [Fact]
-        public void GetAwardById_WhenCalledIncorrectly_ReturnsNotFoundResult()
+        public void GetGenreById_WhenCalledIncorrectly_ReturnsNotFoundResult()
         {
             // Act
-            var result = _controller.GetAward(-1);
+            var result = _controller.GetGenre(-1);
 
             // Assert
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]
-        public void PostAward_WhenCalledIncorrectly_ReturnsConflictResult()
+        public void PostGenre_WhenCalledIncorrectly_ReturnsConflictResult()
         {
             // Arrange
-            var award = new AwardModel{Id = 1};
+            var genre = new GenreModel{Id = 1};
 
             // Act
-            var result = _controller.PostAward(award);
+            var result = _controller.PostGenre(genre);
 
             // Assert
             Assert.IsType<ConflictObjectResult>(result);
         }
 
         [Fact]
-        public void UpdateAward_WhenCalledIncorrectly_ReturnsBadResult()
+        public void UpdateGenre_WhenCalledIncorrectly_ReturnsBadResult()
         {
             // Arrange
-            var award = new AwardModel{Id = -1};
+            var genre = new GenreModel{Id = -1};
 
             // Act
-            var result = _controller.UpdateAward(award);
+            var result = _controller.UpdateGenre(genre);
 
             // Assert
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]
-        public void DeleteAward_WhenCalledIncorrectly_ReturnsGoneResult()
+        public void DeleteGenre_WhenCalledIncorrectly_ReturnsGoneResult()
         {
             // Act
-            var result = _controller.DeleteAward(-1);
+            var result = _controller.DeleteGenre(-1);
 
             // Assert
             Assert.IsType<StatusCodeResult>(result);
