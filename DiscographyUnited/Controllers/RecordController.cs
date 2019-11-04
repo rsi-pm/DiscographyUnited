@@ -32,6 +32,7 @@ namespace DiscographyUnited.Controllers
             {
                 var record = _recordService.FindAll();
                 if (record == null) return NotFound("Record was not found");
+
                 return Ok(record);
             }
             catch (DbException exception)
@@ -55,8 +56,9 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(RecordController)} : {nameof(GetRecord)} was called.");
             try
             {
-                var records = _recordService.FindById(id);
-                return Ok(records);
+                var record = _recordService.FindById(id);
+                if (record == null) return NotFound("Record Not Found");
+                return Ok(record);
             }
             catch (DbException exception)
             {
@@ -80,15 +82,9 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(RecordController)} : {nameof(PostRecord)} was called.");
             try
             {
-                if (recordModel == null)
-                {
-                    return BadRequest("Record is required");
-                }
+                if (recordModel == null) return BadRequest("Record is required");
 
-                if (_recordService.FindById(recordModel.Id) != null)
-                {
-                    return Conflict("Record already exists");
-                }
+                if (_recordService.FindById(recordModel.Id) != null) return Conflict("Record already exists");
 
                 _recordService.Create(recordModel);
                 _recordService.Save();
@@ -109,16 +105,15 @@ namespace DiscographyUnited.Controllers
         [HttpPut(Name = "Record")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         public IActionResult UpdateRecord([FromBody] RecordModel recordModel)
         {
             _logger.LogInformation($"{nameof(RecordController)} : {nameof(UpdateRecord)} was called.");
             try
             {
-                if (recordModel == null)
-                {
-                    return BadRequest("Record is required");
-                }
+                if (recordModel == null) return BadRequest("Record is required");
+                if (_recordService.FindById(recordModel.Id) == null) return NotFound("Record not found");
                 _recordService.Update(recordModel);
                 _recordService.Save();
                 return Ok();
@@ -145,10 +140,7 @@ namespace DiscographyUnited.Controllers
             try
             {
                 var record = _recordService.FindById(id);
-                if (record == null)
-                {
-                    return StatusCode((int)HttpStatusCode.Gone);
-                }
+                if (record == null) return StatusCode((int) HttpStatusCode.Gone);
                 _recordService.Delete(record);
                 _recordService.Save();
                 return Ok();

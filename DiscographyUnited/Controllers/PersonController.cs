@@ -80,15 +80,9 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(PersonController)} : {nameof(PostPerson)} was called.");
             try
             {
-                if (personModel == null)
-                {
-                    return BadRequest("Person is required");
-                }
+                if (personModel == null) return BadRequest("Person is required");
 
-                if (_personService.FindById(personModel.Id) != null)
-                {
-                    return Conflict("Person already exists");
-                }
+                if (_personService.FindById(personModel.Id) != null) return Conflict("Person already exists");
 
                 _personService.Create(personModel);
                 _personService.Save();
@@ -109,16 +103,15 @@ namespace DiscographyUnited.Controllers
         [HttpPut(Name = "Person")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         public IActionResult UpdatePerson([FromBody] PersonModel personModel)
         {
             _logger.LogInformation($"{nameof(PersonController)} : {nameof(UpdatePerson)} was called.");
             try
             {
-                if (personModel == null)
-                {
-                    return BadRequest("Person is required");
-                }
+                if (personModel == null) return BadRequest("Person is required");
+                if (_personService.FindById(personModel.Id) == null) return NotFound("Person not found");
                 _personService.Update(personModel);
                 _personService.Save();
                 return Ok();
@@ -145,10 +138,7 @@ namespace DiscographyUnited.Controllers
             try
             {
                 var person = _personService.FindById(id);
-                if (person == null)
-                {
-                    return StatusCode((int)HttpStatusCode.Gone);
-                }
+                if (person == null) return StatusCode((int) HttpStatusCode.Gone);
                 _personService.Delete(person);
                 _personService.Save();
                 return Ok();

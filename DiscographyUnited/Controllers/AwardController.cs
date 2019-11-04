@@ -103,6 +103,7 @@ namespace DiscographyUnited.Controllers
         [HttpPut(Name = "Award")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         public IActionResult UpdateAward([FromBody] AwardModel awardModel)
         {
@@ -110,6 +111,7 @@ namespace DiscographyUnited.Controllers
             try
             {
                 if (awardModel == null) return BadRequest("Award is required");
+                if (_awardService.FindById(awardModel.Id) == null) return NotFound("Award not found");
                 _awardService.Update(awardModel);
                 _awardService.Save();
                 return Ok();

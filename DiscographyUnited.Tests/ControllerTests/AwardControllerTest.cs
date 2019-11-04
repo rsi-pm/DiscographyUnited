@@ -43,7 +43,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void PostAward_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var award = new AwardModel();
+            var award = new AwardModel {Id = 4};
 
             // Act
             var result = _controller.PostAward(award);
@@ -56,7 +56,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void UpdateAward_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var award = new AwardModel();
+            var award = SampleData.SampleAwardData.ValidSampleAward1();
 
             // Act
             var result = _controller.UpdateAward(award);
@@ -89,7 +89,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void PostAward_WhenCalledIncorrectly_ReturnsConflictResult()
         {
             // Arrange
-            var award = new AwardModel{Id = 1};
+            var award = SampleData.SampleAwardData.ValidSampleAward1();
 
             // Act
             var result = _controller.PostAward(award);
@@ -108,7 +108,7 @@ namespace DiscographyUnited.Tests.ControllerTests
             var result = _controller.UpdateAward(award);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]

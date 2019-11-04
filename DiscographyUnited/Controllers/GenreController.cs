@@ -103,6 +103,7 @@ namespace DiscographyUnited.Controllers
         [HttpPut(Name = "Genre")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         public IActionResult UpdateGenre([FromBody] GenreModel genreModel)
         {
@@ -110,6 +111,7 @@ namespace DiscographyUnited.Controllers
             try
             {
                 if (genreModel == null) return BadRequest("Genre is required");
+                if (_genreService.FindById(genreModel.Id) == null) return NotFound("Genre not found");
                 _genreService.Update(genreModel);
                 _genreService.Save();
                 return Ok();

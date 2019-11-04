@@ -56,6 +56,7 @@ namespace DiscographyUnited.Controllers
             try
             {
                 var styles = _styleService.FindById(id);
+                if (styles == null) return NotFound("Style Not Found");
                 return Ok(styles);
             }
             catch (DbException exception)
@@ -80,15 +81,9 @@ namespace DiscographyUnited.Controllers
             _logger.LogInformation($"{nameof(StyleController)} : {nameof(PostStyle)} was called.");
             try
             {
-                if (styleModel == null)
-                {
-                    return BadRequest("Style is required");
-                }
+                if (styleModel == null) return BadRequest("Style is required");
 
-                if (_styleService.FindById(styleModel.Id) != null)
-                {
-                    return Conflict("Style already exists");
-                }
+                if (_styleService.FindById(styleModel.Id) != null) return Conflict("Style already exists");
 
                 _styleService.Create(styleModel);
                 _styleService.Save();
@@ -109,16 +104,15 @@ namespace DiscographyUnited.Controllers
         [HttpPut(Name = "Style")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         public IActionResult UpdateStyle([FromBody] StyleModel styleModel)
         {
             _logger.LogInformation($"{nameof(StyleController)} : {nameof(UpdateStyle)} was called.");
             try
             {
-                if (styleModel == null)
-                {
-                    return BadRequest("Style is required");
-                }
+                if (styleModel == null) return BadRequest("Style is required");
+                if (_styleService.FindById(styleModel.Id) == null) return NotFound("Style not found");
                 _styleService.Update(styleModel);
                 _styleService.Save();
                 return Ok();
@@ -145,10 +139,7 @@ namespace DiscographyUnited.Controllers
             try
             {
                 var style = _styleService.FindById(id);
-                if (style == null)
-                {
-                    return StatusCode((int)HttpStatusCode.Gone);
-                }
+                if (style == null) return StatusCode((int) HttpStatusCode.Gone);
                 _styleService.Delete(style);
                 _styleService.Save();
                 return Ok();

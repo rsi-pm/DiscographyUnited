@@ -43,7 +43,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void PostPerson_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var person = new PersonModel();
+            var person = new PersonModel {Id = 4};
 
             // Act
             var result = _controller.PostPerson(person);
@@ -56,7 +56,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void UpdatePerson_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var person = new PersonModel();
+            var person = SampleData.SamplePersonData.ValidSamplePerson1();
 
             // Act
             var result = _controller.UpdatePerson(person);
@@ -89,7 +89,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void PostPerson_WhenCalledIncorrectly_ReturnsConflictResult()
         {
             // Arrange
-            var person = new PersonModel{Id = 1};
+            var person = SampleData.SamplePersonData.ValidSamplePerson1();
 
             // Act
             var result = _controller.PostPerson(person);
@@ -99,7 +99,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         }
 
         [Fact]
-        public void UpdatePerson_WhenCalledIncorrectly_ReturnsBadResult()
+        public void UpdatePerson_WhenCalledIncorrectly_ReturnsNotFoundResult()
         {
             // Arrange
             var person = new PersonModel{Id = -1};
@@ -108,7 +108,7 @@ namespace DiscographyUnited.Tests.ControllerTests
             var result = _controller.UpdatePerson(person);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]

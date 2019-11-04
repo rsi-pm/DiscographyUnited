@@ -43,7 +43,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void PostRecord_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var record = new RecordModel();
+            var record = new RecordModel {Id = 4};
 
             // Act
             var result = _controller.PostRecord(record);
@@ -56,7 +56,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void UpdateRecord_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var record = new RecordModel();
+            var record = SampleData.SampleRecordData.ValidRecordRecord1();
 
             // Act
             var result = _controller.UpdateRecord(record);
@@ -89,7 +89,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void PostRecord_WhenCalledIncorrectly_ReturnsConflictResult()
         {
             // Arrange
-            var record = new RecordModel{Id = 1};
+            var record = SampleData.SampleRecordData.ValidRecordRecord1();
 
             // Act
             var result = _controller.PostRecord(record);
@@ -99,7 +99,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         }
 
         [Fact]
-        public void UpdateRecord_WhenCalledIncorrectly_ReturnsBadResult()
+        public void UpdateRecord_WhenCalledIncorrectly_ReturnsNotFoundResult()
         {
             // Arrange
             var record = new RecordModel{Id = -1};
@@ -108,7 +108,7 @@ namespace DiscographyUnited.Tests.ControllerTests
             var result = _controller.UpdateRecord(record);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]

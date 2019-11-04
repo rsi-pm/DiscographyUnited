@@ -43,7 +43,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void PostStyle_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var style = new StyleModel();
+            var style = new StyleModel {Id = 4};
 
             // Act
             var result = _controller.PostStyle(style);
@@ -56,7 +56,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void UpdateStyle_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var style = new StyleModel();
+            var style = SampleData.SampleStyleData.ValidSampleStyle1();
 
             // Act
             var result = _controller.UpdateStyle(style);
@@ -89,7 +89,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void PostStyle_WhenCalledIncorrectly_ReturnsConflictResult()
         {
             // Arrange
-            var style = new StyleModel{Id = 1};
+            var style = SampleData.SampleStyleData.ValidSampleStyle1();
 
             // Act
             var result = _controller.PostStyle(style);
@@ -99,7 +99,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         }
 
         [Fact]
-        public void UpdateStyle_WhenCalledIncorrectly_ReturnsBadResult()
+        public void UpdateStyle_WhenCalledIncorrectly_ReturnsNotFoundResult()
         {
             // Arrange
             var style = new StyleModel{Id = -1};
@@ -108,7 +108,7 @@ namespace DiscographyUnited.Tests.ControllerTests
             var result = _controller.UpdateStyle(style);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]

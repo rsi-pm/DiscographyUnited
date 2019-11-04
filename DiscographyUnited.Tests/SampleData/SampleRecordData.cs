@@ -3,7 +3,7 @@ using DiscographyUnited.Models;
 
 namespace DiscographyUnited.Tests.SampleData
 {
-    public static class RecordRecordData
+    public static class SampleRecordData
     {
         public static RecordModel ValidRecordRecord1()
         {

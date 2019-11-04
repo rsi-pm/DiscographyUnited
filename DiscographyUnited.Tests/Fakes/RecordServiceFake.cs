@@ -13,9 +13,9 @@ namespace DiscographyUnited.Tests.Fakes
         {
             _recordModels = new List<RecordModel>
             {
-                RecordRecordData.ValidRecordRecord1(),
-                RecordRecordData.ValidRecordRecord2(),
-                RecordRecordData.ValidRecordRecord3()
+                SampleRecordData.ValidRecordRecord1(),
+                SampleRecordData.ValidRecordRecord2(),
+                SampleRecordData.ValidRecordRecord3()
             };
         }
 

@@ -43,7 +43,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void PostGenre_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var genre = new GenreModel();
+            var genre = new GenreModel { Id = 4 };
 
             // Act
             var result = _controller.PostGenre(genre);
@@ -56,7 +56,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void UpdateGenre_WhenCalled_ReturnsOkResult()
         {
             // Arrange
-            var genre = new GenreModel();
+            var genre = SampleData.SampleGenreData.ValidSampleGenre1();
 
             // Act
             var result = _controller.UpdateGenre(genre);
@@ -89,7 +89,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         public void PostGenre_WhenCalledIncorrectly_ReturnsConflictResult()
         {
             // Arrange
-            var genre = new GenreModel{Id = 1};
+            var genre = SampleData.SampleGenreData.ValidSampleGenre1();
 
             // Act
             var result = _controller.PostGenre(genre);
@@ -99,7 +99,7 @@ namespace DiscographyUnited.Tests.ControllerTests
         }
 
         [Fact]
-        public void UpdateGenre_WhenCalledIncorrectly_ReturnsBadResult()
+        public void UpdateGenre_WhenCalledIncorrectly_ReturnsNotFoundResult()
         {
             // Arrange
             var genre = new GenreModel{Id = -1};
@@ -108,7 +108,7 @@ namespace DiscographyUnited.Tests.ControllerTests
             var result = _controller.UpdateGenre(genre);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]
