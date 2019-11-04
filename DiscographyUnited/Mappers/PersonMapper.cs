@@ -37,11 +37,11 @@ namespace DiscographyUnited.Mappers
             {
                 Id = personModel.Id,
                 FamilyMemberType = personModel.FamilyMemberType,
-                Records = personModel.Records.Select(RecordMapper.ToEntity).ToList(),
+                Records = personModel.Records?.Select(RecordMapper.ToEntity).ToList(),
                 BirthDate = personModel.BirthDate,
                 DeathDate = personModel.DeathDate,
                 Email = personModel.Email,
-                FamilyMembers = personModel.FamilyMembers.Select(ToEntity).ToList(),
+                FamilyMembers = personModel.FamilyMembers?.Select(ToEntity).ToList(),
                 FirstName = personModel.FirstName,
                 IsArtist = personModel.IsArtist,
                 LastName = personModel.LastName
